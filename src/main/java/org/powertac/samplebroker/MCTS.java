@@ -27,31 +27,27 @@ public class MCTS {
 //			if(current.limitPrice==0 && i!=0)
 //				System.out.println("break");
 			double newLimitPrice=current.limitPrice+
-					(i-current.numOfChildren)*(current.sigma); //IF WE WANT TO REVOKE I-1
+					(i-1-current.numOfChildren)*(current.sigma); //IF WE WANT TO REVOKE I-1
 			Node n;
 			if(i==0) {//Revoke Node
 				n= new RevokeNode(current, current.limitPrice, current.sigma/4, current.numOfChildren, current.pms);
 			}else {
 				n=new Node(current, newLimitPrice, current.sigma/4, current.numOfChildren, current.pms);
 			}
-			//n=new Node(current, newLimitPrice, current.sigma, current.numOfChildren, current.pms);
 			current.children.add(n);
 			this.startRollout=true;
 			return n;
 		}
 		float max=Float.MIN_VALUE;
 		Node retval=new Node(null, (float)0.0, 0,0, current.pms);
-		int z=0;
 		for(int j=0; j<current.children.size(); j++) {
 			Node child=current.children.get(j);
 			float tmp=child.UCT(c,N);
 			if(tmp>max) {
-				z=j;
 				max=tmp;
 				retval=child;
 			}
 		}
-		//if(z==0) this.startRollout=true; //next is the revoke node uncomment for revoke
 		return retval;
 	}
 
@@ -92,27 +88,5 @@ public class MCTS {
 	}
 
 
-	/* 
-	 * Returns the value of the rollout/heuristic in 
-	 * order to backpropagate 
-	 * 
-	 * first call:
-	 * current is going to be a root and depth is going to be 24
-	 * 
-	 * */
-	float treeSearch(Node current, int depth) {
-		Node next=this.selectNext(current);
-		if(depth==0) return current.averageReward;
-		else if (this.startRollout) {
-			this.startRollout=false;
-			return next.rollout(depth);
-		}
-		//do some calculations 
-		//and demand
-		current.increaseN();
-		float tmp=treeSearch(next, depth-1);
-		current.calculateNewAverage(tmp);
-		return current.averageReward;
-
-	}
+	
 }

@@ -564,13 +564,13 @@ implements PortfolioManager, Initializable, Activatable
 				//comment the next if and else 
 				//and uncoment the next section
 				System.out.println("old tariff is "+limitPrice+"and the new is "+bestBid);
-				if(bestBid!=Double.MIN_VALUE) {
+				if(!bestTactic.isThisRevoke) {
 					Rate r=new Rate().withValue(bestBid)
 									 .withDailyBegin(1)
 									 .withDailyEnd(6);						 
 					spec.addRate(r);
 				}else {//tariffRevoke
-					//System.out.println("REVOKE");
+					System.out.println("REVOKE");
 					TariffRevoke revoke =
 							new TariffRevoke(brokerContext.getBroker(), spec);
 					brokerContext.sendMessage(revoke);

@@ -9,14 +9,6 @@ import java.util.Random;
 import org.powertac.common.TariffSpecification;
 import org.powertac.common.enumerations.PowerType;
 
-/**
- * @author leonidas
- *
- */
-/**
- * @author leonidas
- *
- */
 public class Node {
 	PortfolioManagerService pms;
 	Node father;
@@ -71,7 +63,6 @@ public class Node {
 	}
 
 	float rollout(int depth) {
-		//System.out.println("inside rollout");
 		Node begin=this;
 		Node current=this;
 		while (depth>0) {
@@ -119,7 +110,6 @@ public class Node {
 		double priceDiff=(this.limitPrice-minTariff)*100/minTariff;//
 		int smallCustDiff=10;
 		int smallPriceDiff=10;
-		if (this.isThisRevoke) return 0;
 		
 		if(Math.abs(custDiff)<=smallCustDiff/2) {
 			if(priceDiff>0 && priceDiff<smallPriceDiff) evaluation=5;
@@ -132,8 +122,14 @@ public class Node {
 			else if(priceDiff<-3*smallPriceDiff && priceDiff>-4*smallPriceDiff) evaluation=2;
 			else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff) evaluation=1;
 			else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff) evaluation=1;
-			else if(priceDiff>5*smallPriceDiff) evaluation=0;
-			else if(priceDiff<-5*smallPriceDiff) evaluation=0;
+			else if(priceDiff>5*smallPriceDiff){
+				if(this.isThisRevoke) return (float) (6*Math.random());
+				evaluation=0;
+			} 
+			else if(priceDiff<-5*smallPriceDiff){
+				if(this.isThisRevoke) return (float) (6*Math.random());
+				evaluation=0;
+			}
 			
 		}else if(Math.abs(custDiff)<=smallCustDiff*1.5 && Math.abs(custDiff)>smallCustDiff/2) {
 			if(custDiff>=0) {
@@ -146,9 +142,18 @@ public class Node {
 				else if(priceDiff>3*smallPriceDiff && priceDiff<4*smallPriceDiff) evaluation=2;
 				else if(priceDiff<-3*smallPriceDiff && priceDiff>-4*smallPriceDiff) evaluation=1;
 				else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff) evaluation=1;
-				else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff) evaluation=0;
-				else if(priceDiff>5*smallPriceDiff) evaluation=0;
-				else if(priceDiff<-5*smallPriceDiff) evaluation=0;	
+				else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
+				else if(priceDiff>5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
+				else if(priceDiff<-5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}	
 			}else if(custDiff<0) {
 				if(priceDiff>0 && priceDiff<smallPriceDiff) evaluation=4;
 				else if(priceDiff<0 && priceDiff>-smallPriceDiff) evaluation=5;
@@ -158,10 +163,19 @@ public class Node {
 				else if(priceDiff<-2*smallPriceDiff && priceDiff>-3*smallPriceDiff) evaluation=3;
 				else if(priceDiff>3*smallPriceDiff && priceDiff<4*smallPriceDiff) evaluation=1;
 				else if(priceDiff<-3*smallPriceDiff && priceDiff>-4*smallPriceDiff) evaluation=2;
-				else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff) evaluation=0;
+				else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff) evaluation=1;
-				else if(priceDiff>5*smallPriceDiff) evaluation=0;
-				else if(priceDiff<-5*smallPriceDiff) evaluation=0;
+				else if(priceDiff>5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
+				else if(priceDiff<-5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 			}
 		}else if(Math.abs(custDiff)<=smallCustDiff*2.5 && Math.abs(custDiff)>smallCustDiff*1.5) {
 			if(custDiff>=0) {
@@ -170,13 +184,25 @@ public class Node {
 				else if(priceDiff>smallPriceDiff && priceDiff<2*smallPriceDiff) evaluation=4;
 				else if(priceDiff<-smallPriceDiff && priceDiff>-2*smallPriceDiff) evaluation=1;
 				else if(priceDiff>2*smallPriceDiff && priceDiff<3*smallPriceDiff) evaluation=5;
-				else if(priceDiff<-2*smallPriceDiff && priceDiff>-3*smallPriceDiff) evaluation=0;
+				else if(priceDiff<-2*smallPriceDiff && priceDiff>-3*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff>3*smallPriceDiff && priceDiff<4*smallPriceDiff) evaluation=3;
-				else if(priceDiff<-3*smallPriceDiff && priceDiff>-4*smallPriceDiff) evaluation=0;
+				else if(priceDiff<-3*smallPriceDiff && priceDiff>-4*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff) evaluation=2;
-				else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff) evaluation=0;
+				else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff>5*smallPriceDiff) evaluation=1;
-				else if(priceDiff<-5*smallPriceDiff) evaluation=0;
+				else if(priceDiff<-5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 			}else if(custDiff<0) {
 				if(priceDiff>0 && priceDiff<smallPriceDiff) evaluation=3;
 				else if(priceDiff<0 && priceDiff>-smallPriceDiff) evaluation=3;
@@ -184,11 +210,20 @@ public class Node {
 				else if(priceDiff<-smallPriceDiff && priceDiff>-2*smallPriceDiff) evaluation=4;
 				else if(priceDiff>2*smallPriceDiff && priceDiff<3*smallPriceDiff) evaluation=1;
 				else if(priceDiff<-2*smallPriceDiff && priceDiff>-3*smallPriceDiff) evaluation=5;
-				else if(priceDiff>3*smallPriceDiff && priceDiff<4*smallPriceDiff) evaluation=0;
+				else if(priceDiff>3*smallPriceDiff && priceDiff<4*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+				evaluation=0;
+				}
 				else if(priceDiff<-3*smallPriceDiff && priceDiff>-4*smallPriceDiff) evaluation=4;
-				else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff) evaluation=0;
+				else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+				evaluation=0;
+				}
 				else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff) evaluation=3;
-				else if(priceDiff>5*smallPriceDiff) evaluation=0;
+				else if(priceDiff>5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+				evaluation=0;
+				}
 				else if(priceDiff<-5*smallPriceDiff) evaluation=2;
 			}
 		}else if(custDiff<=smallCustDiff*4||custDiff>=smallCustDiff*(-6) && Math.abs(custDiff)>smallCustDiff*2.5) {
@@ -196,27 +231,54 @@ public class Node {
 				if(priceDiff>0 && priceDiff<smallPriceDiff) evaluation=2;
 				else if(priceDiff<0 && priceDiff>-smallPriceDiff) evaluation=1;
 				else if(priceDiff>smallPriceDiff && priceDiff<2*smallPriceDiff) evaluation=3;
-				else if(priceDiff<-smallPriceDiff && priceDiff>-2*smallPriceDiff) evaluation=0;
+				else if(priceDiff<-smallPriceDiff && priceDiff>-2*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+				evaluation=0;
+				}
 				else if(priceDiff>2*smallPriceDiff && priceDiff<3*smallPriceDiff) evaluation=4;
-				else if(priceDiff<-2*smallPriceDiff && priceDiff>-3*smallPriceDiff) evaluation=0;
+				else if(priceDiff<-2*smallPriceDiff && priceDiff>-3*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff>3*smallPriceDiff && priceDiff<4*smallPriceDiff) evaluation=5;
-				else if(priceDiff<-3*smallPriceDiff && priceDiff>-4*smallPriceDiff) evaluation=0;
+				else if(priceDiff<-3*smallPriceDiff && priceDiff>-4*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff) evaluation=2;
-				else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff) evaluation=0;
+				else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff>5*smallPriceDiff) evaluation=1;
-				else if(priceDiff<-5*smallPriceDiff) evaluation=0;
+				else if(priceDiff<-5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 			}else if(custDiff<0) {
 				if(priceDiff>0 && priceDiff<smallPriceDiff) evaluation=1;
 				else if(priceDiff<0 && priceDiff>-smallPriceDiff) evaluation=2;
 				else if(priceDiff>smallPriceDiff && priceDiff<2*smallPriceDiff) evaluation=1;
 				else if(priceDiff<-smallPriceDiff && priceDiff>-2*smallPriceDiff) evaluation=2;
-				else if(priceDiff>2*smallPriceDiff && priceDiff<3*smallPriceDiff) evaluation=0;
+				else if(priceDiff>2*smallPriceDiff && priceDiff<3*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff<-2*smallPriceDiff && priceDiff>-3*smallPriceDiff) evaluation=3;
-				else if(priceDiff>3*smallPriceDiff && priceDiff<4*smallPriceDiff) evaluation=0;
+				else if(priceDiff>3*smallPriceDiff && priceDiff<4*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff<-3*smallPriceDiff && priceDiff>-4*smallPriceDiff) evaluation=4;
-				else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff) evaluation=0;
+				else if(priceDiff>4*smallPriceDiff && priceDiff<5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff<-4*smallPriceDiff && priceDiff>-5*smallPriceDiff) evaluation=5;
-				else if(priceDiff>5*smallPriceDiff) evaluation=0;
+				else if(priceDiff>5*smallPriceDiff){
+					if(this.isThisRevoke) return (float) (6*Math.random());
+					evaluation=0;
+				}
 				else if(priceDiff<-5*smallPriceDiff) evaluation=5;
 			}
 		}
